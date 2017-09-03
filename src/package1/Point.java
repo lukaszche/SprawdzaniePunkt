@@ -1,5 +1,6 @@
+package package1;
 
-public class Point {
+public class Point implements Comparable<Point>{
 	private int id;
 	private double x,y;
 	public Point (int id, double x, double y){
@@ -25,5 +26,8 @@ public class Point {
 	public void setY(double y) {
 		this.y = y;
 	}
-	
+	public int compareTo(Point p)
+	{
+	     return(id - p.id);
+	}
 }
