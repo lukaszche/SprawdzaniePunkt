@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -23,10 +24,10 @@ public class CPMain {
 		wypiszPoligony(polygons);		//wypisanie wczytanych poligonow
 		System.out.println();
 		System.out.println("Punkty wystepujace w wiecej niz 2 polygonach:"); 
-
+		//for(int i=0;i<10000;i++){
 		wypiszPunkty(sprawdzPunkty(points, polygons));   //wyswietlenie wyniku funkcji z zadania
-		
-		// wykonanie programu
+		//}
+		//wykonanie programu
 		//long executionTime = System.currentTimeMillis() - millisActualTime; //czas wykonania programu
 		//System.out.println(executionTime);
 	}
@@ -81,10 +82,16 @@ public class CPMain {
 	
 	public static ArrayList<Point> sprawdzPunkty(ArrayList<Point> points, ArrayList<Poligon> polygons){    //funkcja bedaca przedmiotem zadania z e-maila
 		ArrayList<Point> result=new ArrayList<Point>();											//tworzymy tablice wynikowa dla punktow ktore wystepuja ponad 2 razy
-		int count=0;									//zmienna dla liczby wystapien danego punktu
+		int count=0;			//zmienna dla liczby wystapien danego punktu
+		
+		ArrayList<HashSet<Integer>> tmp=new ArrayList<HashSet<Integer>>();  //HashSet pomocniczy zeby uzyskac szybsze przeszukiwanie danych w celu znalezienia wystapienia id punktu
+		for(Poligon poly:polygons){	
+			tmp.add(new HashSet<Integer>(poly.getPunkt_id()));			//przepisanie daych z poligonow do pomocniczych HashSetow
+		}
+		
 		for(Point point:points){								//iterujemy po wszystkich punktach
-			for(Poligon poly:polygons){						//iterujemy po wszystkich polygonach
-				if(poly.getPunkt_id().contains(point.getId())){		//sprawdzamy czy TreeSet w polygonie zawiera id danego punktu, dzieki zastosowaniu HashSet(poniewaz nie jest wymagany dostep do id punktow w poligonie) zlozonosc obliczeniowa dla sprawdzania jest mozliwie najnizsza
+			for(HashSet<Integer> poly:tmp){						//iterujemy po wszystkich polygonach (HashSetach utworzonych na potrzeby szybszego wyszukiwania)
+				if(poly.contains(point.getId())){		//sprawdzamy czy HashSet zawiera id danego punktu, dzieki zastosowaniu HashSet(poniewaz nie jest wymagany dostep do id punktow w poligonie) zlozonosc obliczeniowa dla sprawdzania jest mozliwie najnizsza
 					count++;				//jezeli sie zawiera zwiekszamy liczbe wystapien
 				}
 				if(count>2){				

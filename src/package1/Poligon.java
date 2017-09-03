@@ -1,11 +1,11 @@
 package package1;
 import java.util.ArrayList;
-import java.util.HashSet;
+
 
 
 public class Poligon {
 	private int liczba_punktow; 
-	private HashSet<Integer> punkt_id=new HashSet<Integer>();
+	private ArrayList<Integer> punkt_id=new ArrayList<Integer>();
 	public Poligon(int lp, ArrayList<Integer> pid){
 		liczba_punktow=lp;
 		for(int i:pid){
@@ -21,10 +21,10 @@ public class Poligon {
 	public void setLiczba_punktow(int liczba_punktow) {
 		this.liczba_punktow = liczba_punktow;
 	}
-	public HashSet<Integer> getPunkt_id() {
+	public ArrayList<Integer> getPunkt_id() {
 		return punkt_id;
 	}
-	public void setPunkt_id(HashSet<Integer> punkt_id) {
+	public void setPunkt_id(ArrayList<Integer> punkt_id) {
 		this.punkt_id = punkt_id;
 	}
 	public void addPunkt_id(int id) {
